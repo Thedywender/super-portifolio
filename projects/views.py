@@ -10,14 +10,14 @@ from django.shortcuts import render
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated,
-    # IsAuthenticatedOrReadOnly,
+    IsAuthenticatedOrReadOnly,
 )
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
-    # permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_permissions(self):
         if self.request.method == "GET":
@@ -26,10 +26,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         if request.method == "GET":
-            profile = self.get_object()
+            profile = Profile.objects.get(id=kwargs["pk"])
+
             return render(
                 request,
-                "projects/templates/profile_detail.html",
+                "profile_detail.html",
                 {
                     "profile": profile,
                     "certificates": profile.certificates.all(),
