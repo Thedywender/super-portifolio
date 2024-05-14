@@ -6,6 +6,7 @@ from .views import (
     ProjectViewSet,
     CertifyingInstitutionViewSet,
     CertificateViewSet,
+    login_page,
 )
 
 router = routers.DefaultRouter()
@@ -19,5 +20,7 @@ urlpatterns = [
     path(
         "profile-details/<int:pk>/",
         ProfileViewSet.as_view({"get": "retrieve"}),
+        name="profile-details",
     ),
+    path("login", login_page, name="login"),
 ]

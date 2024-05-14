@@ -6,12 +6,13 @@ from .serializers import (
     CertifyingInstitutionSerializer,
     CertificateSerializer,
 )
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
+from .forms import UserForm
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -56,3 +57,16 @@ class CertificateViewSet(viewsets.ModelViewSet):
     serializer_class = CertificateSerializer
     queryset = Certificate.objects.all()
     permission_classes = [IsAuthenticated]
+
+
+def login_page(request):
+    if request.method == "POST":
+        user_form = UserForm(request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            profile = Profile(user=user)
+            profile.save()
+            request.session["user_id"] = user.id
+            return redirect("profile-details", pk=profile.id)
+    elif request.method == "GET":
+        return render(request, "login.html", context={"user_form": UserForm()})
