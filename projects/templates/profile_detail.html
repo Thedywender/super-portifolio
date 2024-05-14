@@ -1,29 +1,45 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ profile.user.username }}{% endblock %}
 
 {% block content %}
-    <h1>{{ profile.name }}</h1>
-    <a href="{{ profile.github }}">GitHub</a>
-    <a href="{{ profile.linkedin }}">LinkedIn</a>
-    <p>{{ profile.bio }}</p>
-
-    <ul>
-        {% for project in projects %}
-        <li>
-        <p>{{ project.name }}</p>
-        <p>{{ project.description }}</p>
-        <p>{{ project.keyword }}</p>
-        <p>{{ project.key_skill }}</p>
-    </li>
-    {% endfor %}
-    </ul>
-    <ul>
-        {% for certificate in certificates %}
-        <li>
-        <p>{{ certificate.name }}</p>
-        <p>{{ certificate.certifying_institution }}</p>
-        </li>
-        {% endfor %}
-    </ul>
+<div class="profile-infos-container">
+    <h1 class="profile-infos" id="profile-name">{{ profile.name }}</h1>
+    <a class="profile-infos" id="profile-github" href="{{ profile.github }}">
+        <img class="profile-infos-image" src="{% static 'img/github-icon-branco.png' %}" alt="Profile Image">
+    </a>
+    <a class="profile-infos" id="profile-linkedin" href="{{ profile.linkedin }}">
+        <img class="profile-infos-image" src="{% static 'img/linkedin-icon-circular.png' %}" alt="Profile Image">
+    </a>
+</div>
+<div class="main-container">
+    <div class="certificates-container">
+        <h2 class="section-title">Certificates</h2>
+        <ul class="certificates-institution">
+            {% for certificate in certificates %}
+            <li>
+                <p>{{ certificate.name }}</p>
+                <p>{{ certificate.certifying_institution }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="projects-container">    
+        <ul>
+            {% for project in projects %}
+            <li>
+                <p class="project-title">{{ project.name }}</p>
+                <p class="project-description">{{ project.description }}</p>
+                <p class="project-keyword">{{ project.keyword }}</p>
+                <p class="project-github-url">{{ project.key_skill }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="bio-container">
+        <h2 class="section-title">About me</h2>
+        <p class="profile-infos" id="profile-bio">{{ profile.bio }}</p>
+    </div>
+</div>
 {% endblock %}

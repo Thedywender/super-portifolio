@@ -1,4 +1,5 @@
 from rest_framework import routers
+from .views import ProfileViewSet
 from django.urls import path, include
 from .views import (
     ProfileViewSet,
@@ -13,4 +14,10 @@ router.register(r"projects", ProjectViewSet)
 router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
 router.register(r"certificates", CertificateViewSet)
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+    path(
+        "profile-details/<int:pk>/",
+        ProfileViewSet.as_view({"get": "retrieve"}),
+    ),
+]
