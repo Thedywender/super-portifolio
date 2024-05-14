@@ -16,11 +16,11 @@ router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
 router.register(r"certificates", CertificateViewSet)
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("api/", include(router.urls)),
     path(
         "profile-details/<int:pk>/",
         ProfileViewSet.as_view({"get": "retrieve"}),
         name="profile-details",
     ),
-    path("login", login_page, name="login"),
+    path("", login_page, name="login"),
 ]
