@@ -1,5 +1,50 @@
 from rest_framework import serializers
 from .models import Profile, Project, CertifyingInstitution, Certificate
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+from django.contrib.auth import get_user_model
+from django.db.models import Q
+from rest_framework.serializers import (
+    ModelSerializer,
+    CharField,
+    ValidationError,
+)
+
+
+class UserLoginSerializer(ModelSerializer):
+    token = CharField(allow_blank=True, read_only=True)
+    username = CharField(
+        label="Código do Usuário", allow_blank=True, required=False
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "password", "token"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def validate(self, data):
+        user_obj = None
+        username = data.get("username", None)
+        password = data["password"]
+        if not username:
+            raise ValidationError("Insira o Código de Usuário!")
+
+        user = User.objects.filter(Q(username=username)).distinct()
+        if user.exists() and user.count() == 1:
+            user_obj = user.first()
+        else:
+            raise ValidationError("Esse Código de Usuário não é válido!")
+
+        if user_obj:
+            if not user_obj.check_password(password):
+                raise ValidationError("Credenciais Incorretas!")
+
+            data["token"] = "Some token Here"
+
+        return data
 
 
 class ProfileSerializer(serializers.ModelSerializer):

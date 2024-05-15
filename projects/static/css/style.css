@@ -146,3 +146,111 @@ body {
 #profile-bio {
     color: #000a18;
 }
+
+.section-login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+
+.form-login-container {
+    align-items: center;
+    display: flex;
+    background-color: #F6FAFC;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #001A3B;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
+    text-align: center;
+    width: 30%;
+}
+
+.register-container {
+    align-items: center;
+    display: flex;
+    background-color: #F6FAFC;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #700328;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
+    text-align: center;
+    width: 30%;
+}
+
+.form-register-container {
+    display: flex;
+    align-items: center;
+    flex-direction: center;
+    background-color: #F6FAFC;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #001A3B;
+    flex-direction: column;
+    height: fit-content;
+    width: fit-content;
+    padding: 40px;
+}
+
+.form-field-container {
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.form-field-container input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 90%;
+}
+
+.button-register {
+    width: 30%;
+    height: 35px;
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    font-size: large;
+
+}
+
+.form-field-container {
+    margin-bottom: 20px;
+}
+
+.form-field-container input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.field-errors {
+    color: red;
+    font-size: 0.8em;
+}
+
+.button-login {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: large;
+}
+
+.button-register-render {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #164423;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}

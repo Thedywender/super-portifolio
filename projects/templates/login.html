@@ -4,17 +4,36 @@
 
 {% block content %}
 
-<header>
+<header class="profile-infos-container">
     <h1>Super Portifólio</h1>
 </header>
 
-<section>
-    <form method="post">
+<section class="section-login-container">
+    <form method="post" class="form-login-container">
         <h2>Faça o Login</h2>
         {% csrf_token %}
-        {{ user_form }}
-        <button type="submit">Entrar</button>
+        {% for field in login_form %}
+            <div class="form-field-container">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="field-errors">
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <p><a href="{% url 'profile-details' user.id %}"><button class="button-login">Entrar</button></a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}"><button class="button-login">Entrar</button></a></p>
+        {% endif %}
     </form>
+    <p class="register-container">Ainda não tem uma conta? <a href="{% url 'register' %}"><button class="button-register-render">Crie uma agora!</button></a></p>
+    <br><br><br>
+
 </section>
 
 {% endblock %}

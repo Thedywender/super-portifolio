@@ -1,14 +1,29 @@
 from django.db import models
-from django.contrib.auth.models import User
 from .validators import validate_not_empty, validate_max_length
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
-class UserModel(models.Model):
-    name = models.CharField(max_length=30, validators=[validate_not_empty])
-    email = models.EmailField(
-        validators=[validate_not_empty, validate_max_length]
+class UserModel(AbstractUser):
+    name = models.CharField(
+        max_length=30, validators=[validate_not_empty], unique=True
     )
-    password = models.CharField(max_length=20, validators=[validate_not_empty])
+    email = models.EmailField(
+        validators=[validate_not_empty, validate_max_length], unique=True
+    )
+
+    groups = models.ManyToManyField(Group, related_name="usermodel_set")
+    user_permissions = models.ManyToManyField(
+        Permission, related_name="usermodel_set"
+    )
+
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            profile = Profile.objects.create(user=self, name=self.name)
 
     def __str__(self):
         return self.name
