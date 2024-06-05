@@ -4,10 +4,8 @@ from .models import (
     Project,
     CertifyingInstitution,
     Certificate,
-    UserModel,
 )
 
-admin.site.register(UserModel)
 admin.site.register(Profile)
 admin.site.register(Project)
 admin.site.register(CertifyingInstitution)

@@ -26,7 +26,7 @@
             </div>
         {% endfor %}
         {% if user.is_authenticated %}
-            <p><a href="{% url 'profile-details' user.id %}"><button class="button-login">Entrar</button></a></p>
+            <p><a href="{% url 'profile-detail' user.id %}"><button class="button-login">Entrar</button></a></p>
         {% else %}
             <p><a href="{% url 'login' %}"><button class="button-login">Entrar</button></a></p>
         {% endif %}

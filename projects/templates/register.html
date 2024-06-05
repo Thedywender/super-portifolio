@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %} <h1>Register Profile</h1> {% endblock %}
+{% block title %}Register User{% endblock %}
 
 {% block content %}
     <header class="profile-infos-container"><h1>Faça seu Cadastro!</h1></header>
     <div class="section-login-container">
-        <form method="post" action="{% url 'login' %}" class="form-register-container">
+        <form method="post" action="{% url 'register' %}" class="form-register-container">
             {% csrf_token %}
             {% for field in user_form %}
                 <div class="form-field-container">

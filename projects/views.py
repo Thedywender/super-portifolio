@@ -1,15 +1,22 @@
 from django.contrib.auth import login
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from super_portfolio import settings
 from .forms import UserForm
 from django.shortcuts import redirect, render
 from .serializers import UserLoginSerializer
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
-from dj_rest_auth.views import LoginView
-from rest_framework import viewsets
-from .models import Profile, Project, CertifyingInstitution, Certificate
+from rest_framework import viewsets, status
+from .models import (
+    Profile,
+    Project,
+    CertifyingInstitution,
+    Certificate,
+)
 from .serializers import (
     ProfileSerializer,
     ProjectSerializer,
@@ -25,6 +32,7 @@ from rest_framework.permissions import (
 from django.contrib.auth.forms import AuthenticationForm
 
 
+@method_decorator(login_required(login_url="login"), name="dispatch")
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
@@ -36,14 +44,22 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return [IsAuthenticated()]
 
     def retrieve(self, request, *args, **kwargs):
+        # if not request.user.is_authenticated:
+        #     return Response(status.HTTP_403_FORBIDDEN)
+        print(request.user, "user")
         if request.method == "GET":
-            profile = Profile.objects.get(id=kwargs["pk"])
+            pk = kwargs.get("pk")
+            try:
+                profile = Profile.objects.get(pk=pk)
+            except Profile.DoesNotExist:
+                raise Http404("Profile does not exist")
 
             return render(
                 request,
                 "profile_detail.html",
                 {
                     "profile": profile,
+                    "user_data": request.user,
                     "certificates": profile.certificates.all(),
                     "projects": profile.projects.all(),
                 },
@@ -76,21 +92,19 @@ def register_user(request):
     if request.method == "POST":
         if user_form.is_valid():
             user = user_form.save()
-            print(user)
+            print("register", user)
             return redirect("login")
     return render(request, "register.html", context={"user_form": user_form})
-
-
-from django.shortcuts import redirect
 
 
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
+        print("user", form)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("profile-details", pk=user.id)
+            return redirect("profile-detail", pk=user.id)
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"login_form": form})
@@ -107,6 +121,6 @@ class LoginAPIView(APIView):
             new_data = serializer.data
             user_id = new_data["id"]
             return HttpResponseRedirect(
-                reverse("profile-details", args=[user_id])
+                reverse("profile-detail", args=[user_id])
             )
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)

@@ -6,26 +6,21 @@ from .views import (
     ProjectViewSet,
     CertifyingInstitutionViewSet,
     CertificateViewSet,
-    LoginAPIView,
     login_view,
     register_user,
 )
 
 router = routers.DefaultRouter()
-# router.register(r"user", LoginAPIView)
 router.register(r"profiles", ProfileViewSet)
 router.register(r"projects", ProjectViewSet)
 router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
 router.register(r"certificates", CertificateViewSet)
 
+# Adicione uma rota personalizada para a ação 'retrieve' da 'ProfileViewSet'
+router.register(r"profile-detail", ProfileViewSet, basename="profile-detail")
+
 urlpatterns = [
     path("api/", include(router.urls)),
-    path(
-        "profile-details/<int:pk>/",
-        ProfileViewSet.as_view({"get": "retrieve"}),
-        name="profile-details",
-    ),
     path("", login_view, name="login"),
     path("register/", register_user, name="register"),
-    path("api-login/", LoginAPIView.as_view(), name="api-login"),
 ]
