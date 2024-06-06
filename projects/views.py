@@ -3,14 +3,13 @@ from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from super_portfolio import settings
-from .forms import UserForm
+from .forms import UserForm, ProfileForm
 from django.shortcuts import redirect, render
 from .serializers import UserLoginSerializer
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from .models import (
     Profile,
     Project,
@@ -93,8 +92,28 @@ def register_user(request):
         if user_form.is_valid():
             user = user_form.save()
             print("register", user)
-            return redirect("login")
+            return redirect("create_profile")
     return render(request, "register.html", context={"user_form": user_form})
+
+
+def create_profile(request):
+    profile_form = (
+        ProfileForm(request.POST)
+        if request.method == "POST"
+        else ProfileForm()
+    )
+    if request.method == "POST":
+        if profile_form.is_valid():
+            if hasattr(request.user, "profile"):
+                return redirect("create_profile")
+            profile = profile_form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            print("create_profile", profile)
+            return redirect("login")
+    return render(
+        request, "create_profile.html", context={"profile_form": profile_form}
+    )
 
 
 def login_view(request):
