@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -91,7 +91,10 @@ def register_user(request):
     if request.method == "POST":
         if user_form.is_valid():
             user = user_form.save()
-            print("register", user)
+            authenticated_user = authenticate(
+                username=user.username, password=request.POST["password1"]
+            )
+            login(request, authenticated_user)
             return redirect("create_profile")
     return render(request, "register.html", context={"user_form": user_form})
 
@@ -123,7 +126,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("profile-detail", pk=user.id)
+            profile = Profile.objects.get(user=user)
+            return redirect("profile-detail", pk=profile.id)
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"login_form": form})
@@ -139,7 +143,8 @@ class LoginAPIView(APIView):
         if serializer.is_valid(raise_exception=True):
             new_data = serializer.data
             user_id = new_data["id"]
+            profile = Profile.objects.get(user_id=user_id)
             return HttpResponseRedirect(
-                reverse("profile-detail", args=[user_id])
+                reverse("profile-detail", args=[profile.id])
             )
         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
