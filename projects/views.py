@@ -1,14 +1,14 @@
-from django.contrib.auth import login, authenticate
-from django.http import Http404, HttpResponseRedirect
+from django.contrib.auth import login, authenticate, logout
+from django.http import Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import UserForm, ProfileForm
+from .forms import ProjectForm, UserForm, ProfileForm
 from django.shortcuts import redirect, render
-from .serializers import UserLoginSerializer
-from rest_framework.response import Response
+
+
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from rest_framework.views import APIView
+
 from rest_framework import viewsets
 from .models import (
     Profile,
@@ -43,8 +43,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return [IsAuthenticated()]
 
     def retrieve(self, request, *args, **kwargs):
-        # if not request.user.is_authenticated:
-        #     return Response(status.HTTP_403_FORBIDDEN)
         print(request.user, "user")
         if request.method == "GET":
             pk = kwargs.get("pk")
@@ -133,18 +131,20 @@ def login_view(request):
     return render(request, "login.html", {"login_form": form})
 
 
-class LoginAPIView(APIView):
-    permission_classes = []
-    serializer_class = UserLoginSerializer
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        serializer = UserLoginSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            new_data = serializer.data
-            user_id = new_data["id"]
-            profile = Profile.objects.get(user_id=user_id)
-            return HttpResponseRedirect(
-                reverse("profile-detail", args=[profile.id])
-            )
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+@login_required(login_url="login")
+def create_project(request):
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.profile = request.user.profile
+            project.save()
+            return redirect("profile-detail", pk=request.user.profile.id)
+        else:
+            form = ProjectForm()
+        return render(request, "create_project.html", {"project_form": form})

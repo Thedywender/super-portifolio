@@ -9,6 +9,7 @@ from .views import (
     login_view,
     register_user,
     create_profile,
+    logout_view,
 )
 
 router = routers.DefaultRouter()
@@ -23,4 +24,5 @@ urlpatterns = [
     path("", login_view, name="login"),
     path("register/", register_user, name="register"),
     path("create_profile/", create_profile, name="create_profile"),
+    path("logout/", logout_view, name="logout"),
 ]
