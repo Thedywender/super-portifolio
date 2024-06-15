@@ -29,7 +29,9 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="projects-container">    
+    <div class="projects-container">
+        <h2 class="section-title">Projects</h2>
+        <p><a href="{% url 'create_project' %}"><button class="button-register-render">ADICIONE</button></a></p>
         <ul>
             {% for project in projects %}
             <li>

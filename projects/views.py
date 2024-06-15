@@ -94,24 +94,21 @@ def register_user(request):
             )
             login(request, authenticated_user)
             return redirect("create_profile")
-    return render(request, "register.html", context={"user_form": user_form})
-
-
-def create_profile(request):
-    profile_form = (
-        ProfileForm(request.POST)
-        if request.method == "POST"
-        else ProfileForm()
+    return render(
+        request, "register_user.html", context={"user_form": user_form}
     )
-    if request.method == "POST":
-        if profile_form.is_valid():
-            if hasattr(request.user, "profile"):
-                return redirect("create_profile")
-            profile = profile_form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            print("create_profile", profile)
-            return redirect("login")
+
+
+@login_required(login_url="login")
+def create_profile(request):
+    profile_form = ProfileForm(request.POST or None)
+    if request.method == "POST" and profile_form.is_valid():
+        if hasattr(request.user, "profile"):
+            return redirect("create_profile")
+        profile = profile_form.save(commit=False)
+        profile.user = request.user
+        profile.save()
+        return redirect("login")
     return render(
         request, "create_profile.html", context={"profile_form": profile_form}
     )
@@ -138,13 +135,12 @@ def logout_view(request):
 
 @login_required(login_url="login")
 def create_project(request):
-    if request.method == "POST":
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            project = form.save(commit=False)
-            project.profile = request.user.profile
-            project.save()
-            return redirect("profile-detail", pk=request.user.profile.id)
-        else:
-            form = ProjectForm()
-        return render(request, "create_project.html", {"project_form": form})
+    project_form = ProjectForm(request.POST or None)
+    if request.method == "POST" and project_form.is_valid():
+        project = project_form.save(commit=False)
+        project.profile = request.user.profile
+        project.save()
+        return redirect("profile-detail", pk=request.user.profile.id)
+    return render(
+        request, "create_project.html", {"project_form": project_form}
+    )
