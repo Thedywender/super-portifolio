@@ -1,14 +1,14 @@
-from django.contrib.auth import login, authenticate
-from django.http import Http404, HttpResponseRedirect
+from django.contrib.auth import login, authenticate, logout
+from django.http import Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import UserForm, ProfileForm
+from .forms import ProjectForm, UserForm, ProfileForm
 from django.shortcuts import redirect, render
-from .serializers import UserLoginSerializer
-from rest_framework.response import Response
+
+
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from rest_framework.views import APIView
+
 from rest_framework import viewsets
 from .models import (
     Profile,
@@ -43,8 +43,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return [IsAuthenticated()]
 
     def retrieve(self, request, *args, **kwargs):
-        # if not request.user.is_authenticated:
-        #     return Response(status.HTTP_403_FORBIDDEN)
         print(request.user, "user")
         if request.method == "GET":
             pk = kwargs.get("pk")
@@ -96,24 +94,21 @@ def register_user(request):
             )
             login(request, authenticated_user)
             return redirect("create_profile")
-    return render(request, "register.html", context={"user_form": user_form})
-
-
-def create_profile(request):
-    profile_form = (
-        ProfileForm(request.POST)
-        if request.method == "POST"
-        else ProfileForm()
+    return render(
+        request, "register_user.html", context={"user_form": user_form}
     )
-    if request.method == "POST":
-        if profile_form.is_valid():
-            if hasattr(request.user, "profile"):
-                return redirect("create_profile")
-            profile = profile_form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            print("create_profile", profile)
-            return redirect("login")
+
+
+@login_required(login_url="login")
+def create_profile(request):
+    profile_form = ProfileForm(request.POST or None)
+    if request.method == "POST" and profile_form.is_valid():
+        if hasattr(request.user, "profile"):
+            return redirect("create_profile")
+        profile = profile_form.save(commit=False)
+        profile.user = request.user
+        profile.save()
+        return redirect("login")
     return render(
         request, "create_profile.html", context={"profile_form": profile_form}
     )
@@ -133,18 +128,19 @@ def login_view(request):
     return render(request, "login.html", {"login_form": form})
 
 
-class LoginAPIView(APIView):
-    permission_classes = []
-    serializer_class = UserLoginSerializer
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        serializer = UserLoginSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            new_data = serializer.data
-            user_id = new_data["id"]
-            profile = Profile.objects.get(user_id=user_id)
-            return HttpResponseRedirect(
-                reverse("profile-detail", args=[profile.id])
-            )
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+@login_required(login_url="login")
+def create_project(request):
+    project_form = ProjectForm(request.POST or None)
+    if request.method == "POST" and project_form.is_valid():
+        project = project_form.save(commit=False)
+        project.profile = request.user.profile
+        project.save()
+        return redirect("profile-detail", pk=request.user.profile.id)
+    return render(
+        request, "create_project.html", {"project_form": project_form}
+    )

@@ -12,6 +12,10 @@
     <a class="profile-infos" id="profile-linkedin" href="{{ profile.linkedin }}">
         <img class="profile-infos-image" src="{% static 'img/linkedin-icon-circular.png' %}" alt="Profile Image">
     </a>
+    <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
+        <img class="profile-infos-image" id="profile-logout" src="{% static 'img/images.png' %}" alt="Profile Image">
+        <p class="profile-infos-letter-logout">Logout</p>
+    </a>
 </div>
 <div class="main-container">
     <div class="certificates-container">
@@ -25,7 +29,9 @@
             {% endfor %}
         </ul>
     </div>
-    <div class="projects-container">    
+    <div class="projects-container">
+        <h2 class="section-title">Projects</h2>
+        <p><a href="{% url 'create_project' %}"><button class="button-register-render">ADICIONE</button></a></p>
         <ul>
             {% for project in projects %}
             <li>
