@@ -1,5 +1,4 @@
 from rest_framework import routers
-from .views import ProfileViewSet
 from django.urls import path, include
 from .views import (
     ProfileViewSet,
@@ -11,6 +10,8 @@ from .views import (
     create_profile,
     logout_view,
     create_project,
+    update_project,
+    delete_project,
 )
 
 router = routers.DefaultRouter()
@@ -18,7 +19,6 @@ router.register(r"profiles", ProfileViewSet)
 router.register(r"projects", ProjectViewSet)
 router.register(r"certifying-institutions", CertifyingInstitutionViewSet)
 router.register(r"certificates", CertificateViewSet)
-router.register(r"profile-detail", ProfileViewSet, basename="profile-detail")
 
 urlpatterns = [
     path("api/", include(router.urls)),
@@ -27,4 +27,14 @@ urlpatterns = [
     path("create_profile/", create_profile, name="create_profile"),
     path("logout/", logout_view, name="logout"),
     path("create_project/", create_project, name="create_project"),
+    path(
+        "update_project/<int:project_id>/",
+        update_project,
+        name="update_project",
+    ),
+    path(
+        "delete_project/<int:project_id>/",
+        delete_project,
+        name="delete_project",
+    ),
 ]

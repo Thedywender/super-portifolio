@@ -31,14 +31,19 @@
     </div>
     <div class="projects-container">
         <h2 class="section-title">Projects</h2>
-        <p><a href="{% url 'create_project' %}"><button class="button-register-render">ADICIONE</button></a></p>
+        <p><a href="{% url 'create_project' %}"><button class="button-register-render">ADD</button></a></p>
         <ul>
             {% for project in projects %}
             <li>
                 <p class="project-title">{{ project.name }}</p>
-                <p class="project-description">{{ project.description }}</p>
-                <p class="project-keyword">{{ project.keyword }}</p>
-                <p class="project-github-url">{{ project.key_skill }}</p>
+                <p class="project-description">Description: {{ project.description }}</p>
+                <p class="project-keyword">About: {{ project.keyword }}</p>
+                <p class="project-github-url">Tech: {{ project.key_skill }}</p>
+                <a href="{% url 'update_project' project.id %}"><button class="button-register-render">Update</button></a>
+                <form action="{% url 'delete_project' project.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="button-register-render">Delete</button>
+                </form>
             </li>
             {% endfor %}
         </ul>

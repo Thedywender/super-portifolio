@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import ProjectForm, UserForm, ProfileForm
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -144,3 +144,35 @@ def create_project(request):
     return render(
         request, "create_project.html", {"project_form": project_form}
     )
+
+
+@login_required(login_url="login")
+def update_project(request, project_id):
+    project = get_object_or_404(
+        Project, pk=project_id, profile=request.user.profile
+    )
+    if request.method == "POST":
+        project_form = ProjectForm(request.POST, instance=project)
+        if project_form.is_valid():
+            project_form.save()
+            return redirect("profile-detail", pk=request.user.profile.id)
+    else:
+        project_form = ProjectForm(instance=project)
+
+    return render(
+        request,
+        "update_project.html",
+        {"project_form": project_form, "project": project},
+    )
+
+
+@login_required(login_url="login")
+def delete_project(request, project_id):
+    if request.method == "POST":
+        project = get_object_or_404(
+            Project, id=project_id, profile=request.user.profile
+        )
+        project.delete()
+        return redirect("profile-detail", pk=request.user.profile.id)
+    else:
+        return redirect("profile-detail", pk=request.user.profile.id)

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Atualizar Projeto{% endblock %}
+
+{% block content %}
+    <header class="profile-infos-container"><h1>Atualize seu projeto!</h1></header>
+        <div class="section-login-container">
+            <form method="post" action="{% url 'update_project' project.id %}" class="form-register-container">
+                {% csrf_token %}
+                {% for field in project_form %}
+                    <div class="form-field-container">
+                        <label class="field-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button class="button-register" type="submit">Update</button>
+            </form>
+        </div>
+{% endblock %}
