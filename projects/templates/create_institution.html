@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Institution{% endblock %}
+
+{% block content %}
+    <header class="profile-infos-container"><h1>Crie sua instituição!</h1></header>
+        <div class="section-login-container">
+            <form method="post" action="{% url 'create_institution' %}" class="form-register-container">
+                {% csrf_token %}
+                {% for field in institution_form %}
+                    <div class="form-field-container">
+                        <label class="field-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button class="button-register" type="submit">Crie Instituição</button>
+            </form>
+        </div>
+{% endblock %}

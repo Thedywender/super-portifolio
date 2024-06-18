@@ -12,6 +12,7 @@ from .views import (
     create_project,
     update_project,
     delete_project,
+    create_institution,
 )
 
 router = routers.DefaultRouter()
@@ -37,4 +38,5 @@ urlpatterns = [
         delete_project,
         name="delete_project",
     ),
+    path("create_institution/", create_institution, name="create_institution"),
 ]

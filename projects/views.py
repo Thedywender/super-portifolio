@@ -1,9 +1,15 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import Http404
-from django.urls import reverse
+
+# from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .forms import ProjectForm, UserForm, ProfileForm
+from .forms import (
+    ProjectForm,
+    UserForm,
+    ProfileForm,
+    CertifyingInstitutionForm,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 
 
@@ -176,3 +182,19 @@ def delete_project(request, project_id):
         return redirect("profile-detail", pk=request.user.profile.id)
     else:
         return redirect("profile-detail", pk=request.user.profile.id)
+
+
+def create_institution(request):
+    institution_form = CertifyingInstitutionForm(request.POST or None)
+    if request.method == "POST" and institution_form.is_valid():
+        institution_form.save()
+        return redirect("profile-detail")
+    return render(
+        request,
+        "create_institution.html",
+        {"institution_form": institution_form},
+    )
+
+
+# OBS: esta criando a instituição mas não consegue retornar ao profile_details porque falta a ralação do id
+# não esquecer e criar

@@ -2,12 +2,7 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-a {
-    color: #F6FAFC;
-    cursor: pointer;
-    text-decoration: none;
+    box-sizing: border-box;
 }
 
 body {
@@ -21,9 +16,14 @@ body {
     height: 100%;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 .profile-infos-container {
     align-items: center;
-    background-color: #001A3B;
+    background-color: #2e6ec2;
     display: flex;
     color: #fff;
     justify-content: space-around;
@@ -40,7 +40,6 @@ body {
     width: 40px;
 }
 
-
 #profile-logout, #profile-logout-link {
     position: absolute;
     right: 20px;
@@ -54,19 +53,21 @@ body {
     top: 30px;
     width: 25px;
     font-size: 15px;
-}
-
-.main-container {
-    /* background-color: rgb(203, 211, 198); */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
+    color: antiquewhite;
 }
 
 #logout-img {
     width: 40px;
 }
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: rgb(215, 223, 223);
+}
+
 
 .certificates-container, .bio-container {
     align-items: center;
@@ -82,13 +83,23 @@ body {
     width: 30%;
 }
 
-.bio-container {
-    width: 30%;
+.section-title {
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
+    position: relative; /* Necessário para posicionar o pseudo-elemento */
+    display: inline-block; /* Garante que o pseudo-elemento se alinhe corretamente com o texto */
 }
 
-.section-title {
-    font-size: 1.5em;
-    font-weight: bold;
+.section-title::after {
+    content: ''; /* Necessário para gerar o pseudo-elemento */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px; /* Ajuste conforme necessário para posicionar o sublinhado */
+    height: 2px; /* Espessura do sublinhado */
+    background: currentColor; /* Usa a cor do texto do elemento */
+    box-shadow: 1px 1px 0 #fff, -1px -1px 0 #000; /* Mesmo efeito de sombra do texto */
 }
 
 .certificates-institution {
@@ -105,41 +116,80 @@ body {
 }
 
 .projects-container {
-    background-color: white;
+    position: relative;
+    background-color: rgb(215, 223, 223);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    width: 30%;
+    /* gap: 5px; */
+    padding: 10px;
+    width: 31%;
 }
 
-.project-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    padding: 20px;
+.project_unit_block {
+    margin: 0 50px 5px -10px;
+    border: 2px solid #d1cbcb;
+    padding: 10px;
+    padding-top: 1px;
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    border-radius: 10px;
 }
+
+.project_unit_block a, .project_unit_block form {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.project_unit_block form {
+    position: absolute;
+    right: 3px;
+    bottom: 10px;
+}
+
+.project_unit_block a {
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+}
+
+.project_unit_block a:first-child .button-register-render {
+    margin-left: 0;
+}
+
 
 .project-title {
-    color: #001A3B;
-    font-size: 20px;
+    margin: 10px 0 -8px 0;
+    color: #2a0e75;
+    font-size: 25px;
     font-weight: bold;
-    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
+
 }
 
-.project-description, .project-github-url, .project-keyword {
-    font-size: 16px;
-    margin-bottom: 10px;
+.button_add_projetcs {
+    position: absolute;
+    top: 43px;
+    right: 75px;
+    padding: 6px;
+    background-color: #255031;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.project-description .project-keyword {
+    font-size: 20px;
+    font-weight: 20px;
+    margin: 10px;
     cursor: default;
 }
 
 .project-github-url {
-    background-color: #0055B7;
+    background-color: #2b8bf8;
     border-radius: 8px;
     margin-top: 10px;
     padding: 10px;
@@ -147,7 +197,7 @@ body {
 }
 
 .project-github-url:hover {
-    background-color: #AAC4E4;
+    background-color: #2e6ec2;
     color: #001A3B;
     cursor: pointer;
     text-decoration: underline;
@@ -237,7 +287,6 @@ body {
     color: white;
     border-radius: 20px;
     font-size: large;
-
 }
 
 .form-field-container {
@@ -267,6 +316,7 @@ body {
 
 .button-register-render {
     margin-top: 10px;
+    margin-left: 5px;
     padding: 8px;
     background-color: #164423;
     color: white;

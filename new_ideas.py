@@ -71,3 +71,43 @@
 
 
 # Neste exemplo, delete_project é uma função que exclui um projeto existente. Ela obtém o projeto usando get_object_or_404, o que garante que o projeto existe e pertence ao perfil do usuário autenticado. A exclusão é realizada apenas se o método da requisição for POST, o que é uma prática recomendada para evitar exclusões acidentais ou maliciosas via GET. Após a exclusão, o usuário é redirecionado para uma página apropriada.
+
+
+# def create_institution(request):
+#     institution_form = CertifyingInstitutionForm(request.POST or None)
+#     if request.method == "POST" and institution_form.is_valid():
+#         institution_form.save()
+#         return redirect("profile-detail")
+#     return render(
+#         request,
+#         "create_institution.html",
+#         {"institution_form": institution_form},
+#     )
+
+
+# <!-- {% extends 'base.html' %}
+
+# {% block title %}Create Institution{% endblock %}
+
+# {% block content %}
+#     <header class="profile-infos-container"><h1>Crie sua instituição!</h1></header>
+#         <div class="section-login-container">
+#             <form method="post" action="{% url 'create_institution' %}" class="form-register-container">
+#                 {% csrf_token %}
+#                 {% for field in institution_form %}
+#                     <div class="form-field-container">
+#                         <label class="field-label">{{ field.label }}</label>
+#                         {{ field }}
+#                         {% if field.errors %}
+#                             <div class="field-errors">
+#                                 {% for error in field.errors %}
+#                                     <p>{{ error }}</p>
+#                                 {% endfor %}
+#                             </div>
+#                         {% endif %}
+#                     </div>
+#                 {% endfor %}
+#                 <button class="button-register" type="submit">Crie Instituição</button>
+#             </form>
+#         </div>
+# {% endblock %} -->
