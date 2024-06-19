@@ -26,6 +26,11 @@
             <li class="certificate_unit_block">
                 <p><span class="label-description">Certificate:</span> {{ certificate.name }}</p>
                 <p><span class="label-description">Institution:</span> {{ certificate.certifying_institution }}</p>
+                <a href="{% url 'update_certificate' certificate.id %}"><img src="{% static 'img/lapis.png' %}" class="button-update" alt="update_certificate"></img></a>
+                <form action="{% url 'delete_certificate' certificate.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit"><img src="{% static 'img/lixeira.png' %}"  class="button-delete" alt="delete_project"></button>
+                </form>
             </li>
             {% endfor %}
         </ul>

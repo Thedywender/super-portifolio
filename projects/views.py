@@ -213,3 +213,31 @@ def create_certificate(request):
         "create_certificate.html",
         {"certificate_form": certificate_form},
     )
+
+
+@login_required(login_url="login")
+def update_certificate(request, certificate_id):
+    certificate = get_object_or_404(Certificate, pk=certificate_id)
+    if request.method == "POST":
+        certificate_form = CertificateForm(request.POST, instance=certificate)
+        if certificate_form.is_valid():
+            certificate_form.save()
+            return redirect("profile-detail", pk=request.user.profile.id)
+    else:
+        certificate_form = CertificateForm(instance=certificate)
+
+    return render(
+        request,
+        "update_certificate.html",
+        {"certificate_form": certificate_form, "certificate": certificate},
+    )
+
+
+@login_required(login_url="login")
+def delete_certificate(request, certificate_id):
+    if request.method == "POST":
+        certificate = get_object_or_404(Certificate, id=certificate_id)
+        certificate.delete()
+        return redirect("profile-detail", pk=request.user.profile.id)
+    else:
+        return redirect("profile-detail", pk=request.user.profile.id)

@@ -14,6 +14,8 @@ from .views import (
     delete_project,
     create_institution,
     create_certificate,
+    update_certificate,
+    delete_certificate,
 )
 
 router = routers.DefaultRouter()
@@ -41,4 +43,14 @@ urlpatterns = [
     ),
     path("create_institution/", create_institution, name="create_institution"),
     path("create_certificate", create_certificate, name="create_certificate"),
+    path(
+        "update_certificate/<int:certificate_id>/",
+        update_certificate,
+        name="update_certificate",
+    ),
+    path(
+        "delete_certificate/<int:certificate_id>/",
+        delete_certificate,
+        name="delete_certificate",
+    ),
 ]

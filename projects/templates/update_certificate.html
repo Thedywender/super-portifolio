@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Update Project{% endblock %}
+{% block title %}Update Certificate{% endblock %}
 
 {% block content %}
-    <header class="profile-infos-container"><h1>Update Project!</h1></header>
+    <header class="profile-infos-container"><h1>Update Certificate!</h1></header>
         <div class="section-login-container">
-            <form method="post" action="{% url 'update_project' project.id %}" class="form-register-container">
+            <form method="post" action="{% url 'update_certificate' certificate.id %}" class="form-register-container">
                 {% csrf_token %}
-                {% for field in project_form %}
+                {% for field in certificate_form %}
                     <div class="form-field-container">
                         <label class="field-label">{{ field.label }}</label>
                         {{ field }}
