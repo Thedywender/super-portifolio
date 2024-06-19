@@ -30,13 +30,13 @@ class CertifyingInstitutionForm(forms.ModelForm):
         fields = "__all__"
 
 
-# class CertificateForm(forms.ModelForm):
-#     certifying_institution = forms.ModelChoiceField(
-#         queryset=CertifyingInstitution.objects.all(),
-#         label="Certifying Institution",
-#         help_text="Select the certifying institution.",
-#     )
+class CertificateForm(forms.ModelForm):
+    certifying_institution = forms.ModelChoiceField(
+        queryset=CertifyingInstitution.objects.all(),
+        label="Certifying Institution",
+        help_text="Select the certifying institution.",
+    )
 
-#     class Meta:
-#         model = Certificate
-#         fields = ["name", "certifying_institution"]
+    class Meta:
+        model = Certificate
+        fields = ["name", "certifying_institution"]

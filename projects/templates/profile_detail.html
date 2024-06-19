@@ -20,12 +20,12 @@
 <div class="main-container">
     <div class="certificates-container">
         <p class="section-title">Certificates</p>
-        <p><a href="{% url 'create_institution' %}"><button class="button_add_institutions">ADD institution</button></a></p>
+        <p><a href="{% url 'create_certificate' %}"><button class="button_add_certificate">ADD</button></a></p>
         <ul class="certificates-institution">
             {% for certificate in certificates %}
-            <li>
-                <p>{{ certificate.name }}</p>
-                <p>{{ certificate.certifying_institution }}</p>
+            <li class="certificate_unit_block">
+                <p><span class="label-description">Certificate:</span> {{ certificate.name }}</p>
+                <p><span class="label-description">Institution:</span> {{ certificate.certifying_institution }}</p>
             </li>
             {% endfor %}
         </ul>
@@ -37,13 +37,13 @@
             {% for project in projects %}
             <li class="project_unit_block">
                 <p class="project-title">{{ project.name }}</p>
-                <p class="project-description">Description: {{ project.description }}</p>
-                <p class="project-keyword">About: {{ project.keyword }}</p>
+                <p class="project-description"><span class="label-description">Description:</span> {{ project.description }}</p>
+                <p class="project-keyword"><span class="label-about">About:</span> {{ project.keyword }}</p>
                 <p class="project-github-url">Tech: {{ project.key_skill }}</p>
-                <a href="{% url 'update_project' project.id %}"><button class="button-register-render">Update</button></a>
+                <a href="{% url 'update_project' project.id %}"><img src="{% static 'img/lapis.png' %}" class="button-update" alt="update_project"></img></a>
                 <form action="{% url 'delete_project' project.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="button-register-render">Delete</button>
+                    <button type="submit"><img src="{% static 'img/lixeira.png' %}"  class="button-delete" alt="delete_project"></button>
                 </form>
             </li>
             {% endfor %}

@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Create Project{% endblock %}
 
 {% block content %}
-    <header class="profile-infos-container"><h1>Crie seu projeto!</h1></header>
+    <header class="profile-infos-container">
+        <h1>Create Project!</h1>
+        <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
+            <img class="profile-infos-image" id="profile-logout" src="{% static 'img/images.png' %}" alt="Profile Image">
+            <p class="profile-infos-letter-logout">Logout</p>
+        </a>
+    </header>
         <div class="section-login-container">
             <form method="post" action="{% url 'create_project' %}" class="form-register-container">
                 {% csrf_token %}
@@ -20,7 +28,7 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-                <button class="button-register" type="submit">Crie Projeto</button>
+                <button class="button-register" type="submit">Create Project</button>
             </form>
         </div>
 {% endblock %}

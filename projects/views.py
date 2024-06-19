@@ -9,6 +9,7 @@ from .forms import (
     UserForm,
     ProfileForm,
     CertifyingInstitutionForm,
+    CertificateForm,
 )
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -54,6 +55,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
             pk = kwargs.get("pk")
             try:
                 profile = Profile.objects.get(pk=pk)
+                print(profile.certificates.all())
             except Profile.DoesNotExist:
                 raise Http404("Profile does not exist")
 
@@ -187,8 +189,10 @@ def delete_project(request, project_id):
 def create_institution(request):
     institution_form = CertifyingInstitutionForm(request.POST or None)
     if request.method == "POST" and institution_form.is_valid():
-        institution_form.save()
-        return redirect("profile-detail")
+        institution = institution_form.save(commit=False)
+        institution.profile = request.user.profile
+        institution.save()
+        return redirect("profile-detail", pk=request.user.profile.id)
     return render(
         request,
         "create_institution.html",
@@ -196,5 +200,16 @@ def create_institution(request):
     )
 
 
-# OBS: esta criando a instituição mas não consegue retornar ao profile_details porque falta a ralação do id
-# não esquecer e criar
+@login_required(login_url="login")
+def create_certificate(request):
+    certificate_form = CertificateForm(request.POST or None)
+    if request.method == "POST" and certificate_form.is_valid():
+        certificate = certificate_form.save()
+        certificate.profiles.add(request.user.profile)
+        certificate.save()
+        return redirect("profile-detail", pk=request.user.profile.id)
+    return render(
+        request,
+        "create_certificate.html",
+        {"certificate_form": certificate_form},
+    )

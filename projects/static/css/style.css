@@ -22,6 +22,7 @@ ul {
 }
 
 .profile-infos-container {
+    display: flex;
     align-items: center;
     background-color: #2e6ec2;
     display: flex;
@@ -30,6 +31,15 @@ ul {
     padding: 20px 0;
     text-align: center;
     position: relative;
+    max-height: 45px;
+    min-height: 45px;
+}
+
+.header-certificate {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    align-self: center;
 }
 
 .profile-infos {
@@ -56,6 +66,17 @@ ul {
     color: antiquewhite;
 }
 
+#profile-certificate {
+    position: absolute;
+    left: 40px;
+    bottom: 10px;
+    min-width: 80px;
+    min-height: 50px;
+    border-radius: 8px;
+    background-color: green;
+    color: white;
+}
+
 #logout-img {
     width: 40px;
 }
@@ -69,7 +90,7 @@ ul {
 }
 
 
-.certificates-container, .bio-container {
+.certificates-container, .projects-container, .bio-container {
     align-items: center;
     display: flex;
     background-color: #F6FAFC;
@@ -85,26 +106,26 @@ ul {
 
 .section-title {
     font-size: 2em;
+    margin: 6px;
     font-weight: bold;
     text-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
-    position: relative; /* Necessário para posicionar o pseudo-elemento */
-    display: inline-block; /* Garante que o pseudo-elemento se alinhe corretamente com o texto */
+    position: relative;
+    display: inline-block;
+    min-height: 30px;
 }
 
 .section-title::after {
-    content: ''; /* Necessário para gerar o pseudo-elemento */
+    content: ''; 
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -5px; /* Ajuste conforme necessário para posicionar o sublinhado */
-    height: 2px; /* Espessura do sublinhado */
-    background: currentColor; /* Usa a cor do texto do elemento */
-    box-shadow: 1px 1px 0 #fff, -1px -1px 0 #000; /* Mesmo efeito de sombra do texto */
+    bottom: 0px; 
+    height: 2px; 
+    background: currentColor; 
+    box-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
 }
 
 .certificates-institution {
-    background-color: #aac4e465;
-    color: #001A3B;
     cursor: default;
     border: none;
     border-radius: 5px;
@@ -115,26 +136,40 @@ ul {
     width: fit-content;
 }
 
-.projects-container {
+.certificates-container, .projects-container {
     position: relative;
     background-color: rgb(215, 223, 223);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* gap: 5px; */
-    padding: 10px;
-    width: 31%;
 }
 
-.project_unit_block {
-    margin: 0 50px 5px -10px;
+.button_add_certificate, .button_add_projetcs  {
+    position: absolute;
+    top: 21px;
+    right: 20px;
+    padding: 6px;
+    background-color: #255031;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.project_unit_block, .certificate_unit_block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     border: 2px solid #d1cbcb;
     padding: 10px;
     padding-top: 1px;
     position: relative;
-    width: 100%;
-    min-height: 200px;
+    min-width: 360px;
+    min-height: 20px;
     border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.certificate_unit_block {
+    margin-top: -13px;
 }
 
 .project_unit_block a, .project_unit_block form {
@@ -144,75 +179,73 @@ ul {
 
 .project_unit_block form {
     position: absolute;
-    right: 3px;
-    bottom: 10px;
+    right: 15px;
+    top: 10px;
+    width: 20px;
 }
 
 .project_unit_block a {
     position: absolute;
-    right: 70px;
-    bottom: 10px;
-}
-
-.project_unit_block a:first-child .button-register-render {
-    margin-left: 0;
+    right: 45px;
+    top: 10px;
+    width: 20px;
 }
 
 
 .project-title {
-    margin: 10px 0 -8px 0;
+    margin: 10px 0 10px 0;
     color: #2a0e75;
     font-size: 25px;
     font-weight: bold;
-    text-align: center;
+    text-align: center !important;
     text-shadow: 1px 1px 0 #fff, -1px -1px 0 #000;
-
+    align-self: center;
 }
 
-.button_add_projetcs {
-    position: absolute;
-    top: 43px;
-    right: 75px;
-    padding: 6px;
-    background-color: #255031;
-    color: white;
-    border-radius: 15px;
+.button-update, .button-delete {
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
-    font-size: 15px;
+    width: 15px;
 }
 
-.project-description .project-keyword {
-    font-size: 20px;
-    font-weight: 20px;
+.button-update {
+    width: 20px;
+}
+
+.project-description, .project-keyword, .project-github-url {
+    color: rgb(3, 3, 3);
+    font-size: 18px;
     margin: 10px;
-    cursor: default;
+    width: 100%;
+    text-align: left;
+}
+
+.label-about, .label-description {
+    background-color: #2b8bf8;
+    border-radius: 8px;
+    padding: 3px;
+    color: white;
 }
 
 .project-github-url {
     background-color: #2b8bf8;
-    border-radius: 8px;
-    margin-top: 10px;
-    padding: 10px;
+    padding: 5px;
+    font-size: 18px;
+    text-align: left;
     width: fit-content;
+    color: white;
+    border-radius: 8px;
 }
 
 .project-github-url:hover {
-    background-color: #2e6ec2;
+    background-color: #90aed4;
     color: #001A3B;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.project-key-skill {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 10px;
-    cursor: default;
-}
-
-.bio-container {
-    width: 30%;
-}
 
 #profile-bio {
     color: #000a18;
@@ -268,20 +301,60 @@ ul {
     padding: 40px;
 }
 
-.form-field-container {
-    margin-bottom: 10px;
-    width: 90%;
+#certificate-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #F6FAFC;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: #001A3B;
+    flex-direction: column;
+    height: 200px;
+    width: fit-content;
+    padding: 60px;
+    margin-top: 20px;
+
 }
 
-.form-field-container input {
+.form-field-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: -15px;
+}
+
+.form-field-container .field-input input,
+.form-field-container .field-input select {
     padding: 10px;
+    justify-content: center;
+    margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
     width: 90%;
+    font-size: 25px;
+    color: #333;
 }
 
-.button-register {
-    width: 30%;
+.field-label {
+    font-size: 25px;
+    text-align: center;
+    width: 100%;
+}
+
+.field-input {
+    display: flex;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.custom-select-class {
+    width: 300px;
+}
+
+.button-register, .button-create-certificate {
+    width: fit-content;
     height: 35px;
     background-color: green;
     color: white;
@@ -289,14 +362,15 @@ ul {
     font-size: large;
 }
 
-.form-field-container {
-    margin-bottom: 20px;
+.button-register:hover, .button-create-certificate:hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.form-field-container input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+
+.form-field-container {
+    margin-bottom: 20px;
 }
 
 .field-errors {
@@ -312,16 +386,4 @@ ul {
     border-radius: 5px;
     cursor: pointer;
     font-size: large;
-}
-
-.button-register-render {
-    margin-top: 10px;
-    margin-left: 5px;
-    padding: 8px;
-    background-color: #164423;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 15px;
 }
