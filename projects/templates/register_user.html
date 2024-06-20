@@ -3,14 +3,18 @@
 {% block title %}Register User{% endblock %}
 
 {% block content %}
-    <header class="profile-infos-container"><h1>Faça seu Cadastro!</h1></header>
-    <div class="section-login-container">
-        <form method="post" action="{% url 'register' %}" class="form-register-container">
+<div class="login-block-container">
+    <header class="profile-infos-container">
+        <h1 class="login-text-header">Register!</h1>
+    </header>
+    <section class="section-login-container">
+        <form method="post" action="{% url 'register' %}" class="form-login-container">
+            <h2 class="login-text-header">REGISTER</h2>
             {% csrf_token %}
             {% for field in user_form %}
-                <div class="form-field-container">
-                    <label class="field-label">{{ field.label }}</label>
-                    {{ field }}
+                <div class="form-login-inputs">
+                    <label class="label-login">{{ field.label }}</label>
+                    <label for="" class="login-input">{{ field }}</label>
                     {% if field.errors %}
                         <div class="field-errors">
                             {% for error in field.errors %}
@@ -20,7 +24,8 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button class="button-register" type="submit">Cadastrar</button>
+            <button class="button-register" type="submit">Make your Register</button>
         </form>
-    </div>
+    </section>
+</div>
 {% endblock %}

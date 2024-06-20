@@ -5,35 +5,21 @@
 
 {% block content %}
 <div class="profile-infos-container">
-    <h1 class="profile-infos" id="profile-name">{{ profile.user }}</h1>
     <a class="profile-infos" id="profile-github" href="{{ profile.github }}">
         <img class="profile-infos-image" src="{% static 'img/github-icon-branco.png' %}" alt="Profile Image">
     </a>
+    <h1 class="profile-infos" id="profile-name">{{ profile.user.profile }}</h1>
     <a class="profile-infos" id="profile-linkedin" href="{{ profile.linkedin }}">
         <img class="profile-infos-image" src="{% static 'img/linkedin-icon-circular.png' %}" alt="Profile Image">
     </a>
     <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
-        <img class="profile-infos-image" id="profile-logout" src="{% static 'img/images.png' %}" alt="Profile Image">
-        <p class="profile-infos-letter-logout">Logout</p>
+        <img class="profile-infos-image" id="profile-logout" src="{% static 'img/out.png' %}" alt="Profile Image">
     </a>
 </div>
 <div class="main-container">
-    <div class="certificates-container">
-        <p class="section-title">Certificates</p>
-        <p><a href="{% url 'create_certificate' %}"><button class="button_add_certificate">ADD</button></a></p>
-        <ul class="certificates-institution">
-            {% for certificate in certificates %}
-            <li class="certificate_unit_block">
-                <p><span class="label-description">Certificate:</span> {{ certificate.name }}</p>
-                <p><span class="label-description">Institution:</span> {{ certificate.certifying_institution }}</p>
-                <a href="{% url 'update_certificate' certificate.id %}"><img src="{% static 'img/lapis.png' %}" class="button-update" alt="update_certificate"></img></a>
-                <form action="{% url 'delete_certificate' certificate.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit"><img src="{% static 'img/lixeira.png' %}"  class="button-delete" alt="delete_project"></button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="bio-container">
+        <h2 class="section-title">About me</h2>
+        <p class="profile-infos" id="profile-bio">{{ profile.bio }}</p>
     </div>
     <div class="projects-container">
         <h2 class="section-title">Projects</h2>
@@ -45,18 +31,31 @@
                 <p class="project-description"><span class="label-description">Description:</span> {{ project.description }}</p>
                 <p class="project-keyword"><span class="label-about">About:</span> {{ project.keyword }}</p>
                 <p class="project-github-url">Tech: {{ project.key_skill }}</p>
-                <a href="{% url 'update_project' project.id %}"><img src="{% static 'img/lapis.png' %}" class="button-update" alt="update_project"></img></a>
-                <form action="{% url 'delete_project' project.id %}" method="post">
+                <a href="{% url 'update_project' project.id %}"><img src="{% static 'img/update.png' %}" class="button-update" alt="update_project"></img></a>
+                <form class="button-delete" action="{% url 'delete_project' project.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit"><img src="{% static 'img/lixeira.png' %}"  class="button-delete" alt="delete_project"></button>
+                    <button type="submit"><img src="{% static 'img/lixo.png' %}"  class="button-update" alt="delete_project"></button>
                 </form>
             </li>
             {% endfor %}
         </ul>
     </div>
-    <div class="bio-container">
-        <h2 class="section-title">About me</h2>
-        <p class="profile-infos" id="profile-bio">{{ profile.bio }}</p>
+    <div class="certificates-container">
+        <p class="section-title">Certificates</p>
+        <p><a href="{% url 'create_certificate' %}"><button class="button_add_certificate">ADD</button></a></p>
+        <ul class="certificates-institution">
+            {% for certificate in certificates %}
+            <li class="certificate_unit_block">
+                <p><span class="label-description">Certificate:</span> {{ certificate.name }}</p>
+                <p><span class="label-description">Institution:</span> {{ certificate.certifying_institution }}</p>
+                <a href="{% url 'update_certificate' certificate.id %}"><img src="{% static 'img/update.png' %}" class="button-update" alt="update_certificate"></img></a>
+                <form  action="{% url 'delete_certificate' certificate.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit"><img src="{% static 'img/lixo.png' %}"  class="button-update" alt="delete_project"></button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

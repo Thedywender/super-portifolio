@@ -9,10 +9,9 @@ body {
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    justify-content: space-between;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #c9cecf;
     height: 100%;
 }
 
@@ -24,15 +23,14 @@ ul {
 .profile-infos-container {
     display: flex;
     align-items: center;
-    background-color: #2e6ec2;
+    background: radial-gradient(circle, #06558a, #109e50, #065511);
     display: flex;
     color: #fff;
     justify-content: space-around;
-    padding: 20px 0;
+    padding: 7px 0;
     text-align: center;
     position: relative;
-    max-height: 45px;
-    min-height: 45px;
+    height: 70px;
 }
 
 .header-certificate {
@@ -42,19 +40,27 @@ ul {
     align-self: center;
 }
 
-.profile-infos {
-    font-size: 18px;
+#profile-name {
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(80deg, rgb(189, 209, 189), rgb(177, 167, 201));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: rgb(24, 199, 15);
+    text-shadow: 2px 2px 2px rgba(19, 18, 18);
 }
 
-.profile-infos-image, .profile-logout-link {
+.profile-infos-image {
     width: 40px;
 }
 
-#profile-logout, #profile-logout-link {
+#profile-logout-link {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 25px;
+    right: 18px;
+    top: 40px;
+    width: 40px;
+    color: white;
+    filter: drop-shadow(0 10px 10px white);
 }
 
 .profile-infos-letter-logout {
@@ -85,8 +91,8 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
-    background-color: rgb(215, 223, 223);
+    padding: 15px;
+    margin-top: 0;
 }
 
 
@@ -131,7 +137,7 @@ ul {
     border-radius: 5px;
     padding: 10px;
     font-size: 16px;
-    margin-top: 20px;
+    margin-top: 5px;
     transition: background-color 0.3s ease;
     width: fit-content;
 }
@@ -140,18 +146,6 @@ ul {
     position: relative;
     background-color: rgb(215, 223, 223);
     display: flex;
-}
-
-.button_add_certificate, .button_add_projetcs  {
-    position: absolute;
-    top: 21px;
-    right: 20px;
-    padding: 6px;
-    background-color: #255031;
-    color: white;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 15px;
 }
 
 .project_unit_block, .certificate_unit_block {
@@ -168,23 +162,20 @@ ul {
     margin-bottom: 5px;
 }
 
-.certificate_unit_block {
-    margin-top: -13px;
-}
-
-.project_unit_block a, .project_unit_block form {
+.project_unit_block a, .project_unit_block form
+.certificate_unit_block a, .certificate_unit_block form  {
     display: inline-block;
     margin-right: 5px;
 }
 
-.project_unit_block form {
+.project_unit_block form, .certificate_unit_block form {
     position: absolute;
     right: 15px;
     top: 10px;
     width: 20px;
 }
 
-.project_unit_block a {
+.project_unit_block a, .certificate_unit_block a {
     position: absolute;
     right: 45px;
     top: 10px;
@@ -202,17 +193,7 @@ ul {
     align-self: center;
 }
 
-.button-update, .button-delete {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    width: 15px;
-}
 
-.button-update {
-    width: 20px;
-}
 
 .project-description, .project-keyword, .project-github-url {
     color: rgb(3, 3, 3);
@@ -251,26 +232,94 @@ ul {
     color: #000a18;
 }
 
+.login-block-container {
+    background-color: rgb(236, 240, 235);
+}
+
+
 .section-login-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 60px;
+    background-color: #c9cecf;
+    width: 100%;
+    height: 100%;
 }
 
 .form-login-container {
     align-items: center;
     display: flex;
-    background-color: #F6FAFC;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    color: #001A3B;
     flex-direction: column;
+    background-color: #eff4f7;
+    border-radius: 5px;
+    box-shadow: 2px 8px 6px rgba(0, 0, 0, 0.1);
+    color: #001A3B;
     height: fit-content;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     width: 30%;
+}
+
+.login-text-header, .login-infos-header {
+    font-size: 35px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, rgb(13, 99, 11), rgb(38, 12, 99));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.5);
+    /* transform: rotate(-8deg); */
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.login-infos-header {
+    font-size: 40px;
+    /* transform: rotate(-2deg); */
+    background: linear-gradient(80deg, rgb(189, 209, 189), rgb(177, 167, 201));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: rgb(26, 190, 17);
+    text-shadow: 2px 2px 2px rgba(19, 18, 18);
+    margin-bottom: 10px;
+}
+
+.form-login-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: fit-content;
+}
+
+.label-login, .login-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.label-login {
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: rgb(79, 66, 197);
+
+}
+
+.login-input input {
+    border-radius: 5px;
+    padding: 5px 50px 0 50px;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+}
+
+.register-container-letter {
+    font-size: 20px;
+    margin: 0 0 10px 0;
 }
 
 .register-container {
@@ -278,13 +327,14 @@ ul {
     display: flex;
     background-color: #F6FAFC;
     border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 8px 6px rgba(0, 0, 0, 0.1);
     color: #700328;
     flex-direction: column;
     height: fit-content;
     padding: 20px;
     text-align: center;
     width: 30%;
+    margin-top: 20px;
 }
 
 .form-register-container {
@@ -326,46 +376,25 @@ ul {
 }
 
 .form-field-container .field-input input,
-.form-field-container .field-input select {
-    padding: 10px;
+.form-field-container #field-input select {
+    padding: 20px;
     justify-content: center;
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    width: 90%;
-    font-size: 25px;
+    width: 83%;
+    height: 33px;
+    font-size: 20px;
     color: #333;
 }
 
 .field-label {
     font-size: 25px;
     text-align: center;
-    width: 100%;
-}
-
-.field-input {
-    display: flex;
-    width: 400px;
-    margin-top: 10px;
 }
 
 .custom-select-class {
     width: 300px;
-}
-
-.button-register, .button-create-certificate {
-    width: fit-content;
-    height: 35px;
-    background-color: green;
-    color: white;
-    border-radius: 20px;
-    font-size: large;
-}
-
-.button-register:hover, .button-create-certificate:hover {
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
 }
 
 
@@ -378,12 +407,71 @@ ul {
     font-size: 0.8em;
 }
 
-.button-login {
+.button-login, .button-register {
     padding: 10px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
     font-size: large;
+}
+
+.button-login:hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    color: #e7eef5;
+    background-color: #2b8bf8;
+    transform: translateY(-2px);
+}
+
+.button_add_certificate, .button_add_projetcs  {
+    position: absolute;
+    top: 21px;
+    right: 20px;
+    padding: 6px;
+    background-color: #255031;
+    color: white;
+    border-radius: 15px;
+    font-size: 15px;
+}
+
+.button_add_certificate:hover, .button_add_projetcs:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #109e50;
+    transform: translateY(-2px);
+}
+
+.button-update, .button-delete {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 15px;
+}
+
+.button-update {
+    width: 20px;
+}
+
+.button-update:hover, .button-delete:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.button-register, .button-create-certificate {
+    width: fit-content;
+    height: 35px;
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    font-size: large;
+    margin-top: 15px;
+}
+
+.button-register:hover, .button-create-certificate:hover {
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }

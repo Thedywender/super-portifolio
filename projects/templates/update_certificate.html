@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Update Certificate{% endblock %}
 
 {% block content %}
-    <header class="profile-infos-container"><h1>Update Certificate!</h1></header>
-        <div class="section-login-container">
-            <form method="post" action="{% url 'update_certificate' certificate.id %}" class="form-register-container">
+<div class="login-block-container">
+    <header class="profile-infos-container">
+        <h1 class="login-infos-header">Update Certificate!</h1>
+        <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
+            <img class="profile-infos-image" id="profile-logout" src="{% static 'img/out.png' %}" alt="Profile Image">
+        </a>
+    </header>
+        <section class="section-login-container">
+            <form method="post" action="{% url 'update_certificate' certificate.id %}" class="form-login-container">
+                <h2 class="login-text-header">UPDATE</h2>
                 {% csrf_token %}
                 {% for field in certificate_form %}
                     <div class="form-field-container">
-                        <label class="field-label">{{ field.label }}</label>
-                        {{ field }}
+                        <label class="label-login">{{ field.label }}</label>
+                            <span class="login-input" id="field-input">{{ field }}</span>
                         {% if field.errors %}
                             <div class="field-errors">
                                 {% for error in field.errors %}
@@ -20,7 +29,13 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-                <button class="button-register" type="submit">Update</button>
+                <button class="button-create-certificate" type="submit">Update</button>
             </form>
-        </div>
+            <div class="register-container">
+                <p class="register-container-letter">Not have any institution left?</p>
+                <a href="{% url 'create_institution' %}"><button class="button-login">ADD INSTITUTION</button></a>
+            </div>
+            <br><br><br>
+        </section>
+    </div>
 {% endblock %}

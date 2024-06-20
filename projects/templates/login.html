@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %} Meu Portifólio {% endblock %}
+{% block title %} My Portfolio {% endblock %}
 
 {% block content %}
-
+<div class="login-block-container">
 <header class="profile-infos-container">
-    <h1>Super Portifólio</h1>
+    <h1 class="login-infos-header">Link-Me</h1>
 </header>
 
 <section class="section-login-container">
     <form method="post" class="form-login-container">
-        <h2>Faça o Login</h2>
+        <h2 class="login-text-header">LOGIN</h2>
         {% csrf_token %}
         {% for field in login_form %}
-            <div class="form-field-container">
-                {{ field.label_tag }}
-                {{ field }}
+            <div class="form-login-inputs">
+                <label class="label-login">{{ field.label_tag }}</label>
+                <label class="login-input">{{ field }}</label>
                 {% if field.errors %}
                     <div class="field-errors">
                         {% for error in field.errors %}
@@ -26,12 +26,16 @@
             </div>
         {% endfor %}
         {% if user.is_authenticated %}
-            <p><a href="{% url 'profile-detail' user.id %}"><button type="submit" class="button-login">Entrar</button></a></p>
+            <p><a href="{% url 'profile-detail' user.id %}"><button type="submit" class="button-login">Enter</button></a></p>
         {% else %}
-            <p><a href="{% url 'login' %}"><button type="submit" class="button-login">Entrar</button></a></p>
+            <p><a href="{% url 'login' %}"><button type="submit" class="button-login">Enter</button></a></p>
         {% endif %}
     </form>
-    <p class="register-container">Ainda não tem uma conta? <a href="{% url 'register' %}"><button class="button-register-render">Crie uma agora!</button></a></p>
+    <div class="register-container">
+    <p class="register-container-letter">Not have any acount left?</p>
+        <a href="{% url 'register' %}"><button class="button-login">Create Now!</button></a>
+    </div>
     <br><br><br>
 </section>
+</div>
 {% endblock %}

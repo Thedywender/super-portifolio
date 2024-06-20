@@ -5,31 +5,37 @@
 {% block title %}Create Certificate{% endblock %}
 
 {% block content %}
+<div class="login-block-container">
     <header class="profile-infos-container">
-        <h1 class="header-certificate">Create Certificate!</h1>
-         <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
-        <img class="profile-infos-image" id="profile-logout" src="{% static 'img/images.png' %}" alt="Profile Image">
-        <p class="profile-infos-letter-logout">Logout</p>
-    </a>
-        <p><a href="{% url 'create_institution' %}"><button id="profile-certificate">ADD institution</button></a></p>
-    </header>
-        <div class="section-login-container">
-            <form method="post" action="{% url 'create_certificate' %}" id="certificate-form" class="form-register-container">
+        <h1 class="login-infos-header">Create Certificate!</h1>
+            <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
+                <img class="profile-infos-image" id="profile-logout" src="{% static 'img/out.png' %}" alt="Profile Image">
+            </a>
+</header>
+<section class="section-login-container">
+    <form method="post" action="{% url 'create_certificate' %}" class="form-login-container">
+                <h2 class="login-text-header">Certificate</h2>
                 {% csrf_token %}
                 {% for field in certificate_form %}
-                    <div class="form-field-container">
-                        <label class="field-label">{{ field.label }}</label>
-                            <span class="field-input">{{ field }}</span>
-                        {% if field.errors %}
-                            <div class="field-errors">
-                                {% for error in field.errors %}
-                                    <p>{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                <div class="form-field-container">
+                    <label class="label-login">{{ field.label }}</label>
+                    <span class="login-input" id="field-input">{{ field }}</span>
+                    {% if field.errors %}
+                    <div class="field-errors">
+                        {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
                     </div>
+                    {% endif %}
+                </div>
                 {% endfor %}
-                <button class="button-create-certificate" type="submit">Create Certificate</button>
+                <button class="button-create-certificate" type="submit">Create</button>
             </form>
-        </div>
+            <div class="register-container">
+                <p class="register-container-letter">Not have any institution left?</p>
+                <a href="{% url 'create_institution' %}"><button class="button-login">Create</button></a>
+            </div>
+            <br><br><br>
+        </section>
+    </div>
 {% endblock %}
