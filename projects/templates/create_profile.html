@@ -5,12 +5,16 @@
 {% block content %}
     <header class="profile-infos-container"><h1>Crie seu perfil!</h1></header>
     <div class="section-login-container">
-        <form method="post" action="{% url 'create_profile' %}" class="form-register-container">
+        <form method="post" action="{% url 'create_profile' %}" enctype="multipart/form-data" class="form-register-container">
             {% csrf_token %}
             {% for field in profile_form %}
                 <div class="form-field-container">
-                    <label class="field-label">{{ field.label }}</label>
-                    {{ field }}
+                    <label class="label-login">{{ field.label }}</label>
+                    {% if field.name == 'photo' %}
+                        <input type="file" name="{{ field.name }}" accept="image/*" id="id_{{ field.name }}">
+                        {% else %}
+                        <label class="login-input">{{ field }}</label>
+                        {% endif %}
                     {% if field.errors %}
                         <div class="field-errors">
                             {% for error in field.errors %}

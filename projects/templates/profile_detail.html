@@ -19,6 +19,8 @@
 <div class="main-container">
     <div class="bio-container">
         <h2 class="section-title">About me</h2>
+        <img src="{{ profile.photo.url }}" alt="Profile Photo" class="profile-photo">
+        <a href="{% url 'update_profile' profile.id %}"><img src="{% static 'img/pencil.png' %}" class="button-update-bio" alt="update_profile"></img></a>
         <p class="profile-infos" id="profile-bio">{{ profile.bio }}</p>
     </div>
     <div class="projects-container">
@@ -31,10 +33,10 @@
                 <p class="project-description"><span class="label-description">Description:</span> {{ project.description }}</p>
                 <p class="project-keyword"><span class="label-about">About:</span> {{ project.keyword }}</p>
                 <p class="project-github-url">Tech: {{ project.key_skill }}</p>
-                <a href="{% url 'update_project' project.id %}"><img src="{% static 'img/update.png' %}" class="button-update" alt="update_project"></img></a>
-                <form class="button-delete" action="{% url 'delete_project' project.id %}" method="post">
+                <a href="{% url 'update_project' project.id %}"><img src="{% static 'img/pencil.png' %}" class="button-update" alt="update_project"></img></a>
+                <form id="delete-project-form-{{ project.id }}" action="{% url 'delete_project' project.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit"><img src="{% static 'img/lixo.png' %}"  class="button-update" alt="delete_project"></button>
+                    <a href="javascript:void(0);" class="delete-project-link" data-form-id="{{ project.id }}"><img src="{% static 'img/lixeira.png' %}" class="button-delete" alt="delete_project"></a>
                 </form>
             </li>
             {% endfor %}
@@ -48,10 +50,10 @@
             <li class="certificate_unit_block">
                 <p><span class="label-description">Certificate:</span> {{ certificate.name }}</p>
                 <p><span class="label-description">Institution:</span> {{ certificate.certifying_institution }}</p>
-                <a href="{% url 'update_certificate' certificate.id %}"><img src="{% static 'img/update.png' %}" class="button-update" alt="update_certificate"></img></a>
-                <form  action="{% url 'delete_certificate' certificate.id %}" method="post">
+                <a href="{% url 'update_certificate' certificate.id %}"><img src="{% static 'img/pencil.png' %}" class="button-update" alt="update_certificate"></img></a>
+                <form id="delete-certificate-form-{{ certificate.id }}" action="{% url 'delete_certificate' certificate.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit"><img src="{% static 'img/lixo.png' %}"  class="button-update" alt="delete_project"></button>
+                    <a href="javascript:void(0);" class="delete-certificate-link" data-form-id="{{ certificate.id }}"><img src="{% static 'img/lixeira.png' %}" class="button-delete" alt="delete_certificate"></a>
                 </form>
             </li>
             {% endfor %}

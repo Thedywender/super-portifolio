@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+    <div class="login-block-container">
+        <header class="profile-infos-container">
+            <h1 class="login-infos-header">Update Profile</h1>
+            <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
+                <img class="profile-infos-image" id="profile-logout" src="{% static 'img/out.png' %}" alt="Profile Image">
+            </a>
+        </header>
+        <section class="section-login-container">
+            <form method="post" action="{% url 'update_profile' profile.id %}" class="form-login-container">
+                <h2 class="login-text-header">Profile</h2>
+                {% csrf_token %}
+                {% for field in profile_form %}
+                    <div class="form-field-container">
+                        <label class="label-login">{{ field.label }}</label>
+                        {% if field.name == 'photo' %}
+                        <input type="file" name="{{ field.name }}" accept="image/*" id="id_{{ field.name }}">
+                        {% else %}
+                        <label class="login-input">{{ field }}</label>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button class="button-register" type="submit">Update</button>
+            </form>
+        </section>
+    </div>
+{% endblock %}

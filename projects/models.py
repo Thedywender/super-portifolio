@@ -17,6 +17,9 @@ class Profile(models.Model):
     bio = models.TextField(
         validators=[validate_not_empty, validate_max_length]
     )
+    photo = models.ImageField(
+        upload_to="Profile_photo/", null=True, blank=True
+    )
 
     def __str__(self):
         return self.name

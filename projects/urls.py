@@ -1,5 +1,7 @@
 from rest_framework import routers
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import (
     ProfileViewSet,
     ProjectViewSet,
@@ -16,6 +18,7 @@ from .views import (
     create_certificate,
     update_certificate,
     delete_certificate,
+    update_profile,
 )
 
 router = routers.DefaultRouter()
@@ -32,6 +35,11 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("create_project/", create_project, name="create_project"),
     path(
+        "update_profile/<int:profile_id>/",
+        update_profile,
+        name="update_profile",
+    ),
+    path(
         "update_project/<int:project_id>/",
         update_project,
         name="update_project",
@@ -42,7 +50,7 @@ urlpatterns = [
         name="delete_project",
     ),
     path("create_institution/", create_institution, name="create_institution"),
-    path("create_certificate", create_certificate, name="create_certificate"),
+    path("create_certificate/", create_certificate, name="create_certificate"),
     path(
         "update_certificate/<int:certificate_id>/",
         update_certificate,
@@ -54,3 +62,9 @@ urlpatterns = [
         name="delete_certificate",
     ),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

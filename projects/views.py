@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
 from django.http import Http404
 
-# from django.urls import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import (
@@ -109,17 +109,27 @@ def register_user(request):
 
 @login_required(login_url="login")
 def create_profile(request):
-    profile_form = ProfileForm(request.POST or None)
-    if request.method == "POST" and profile_form.is_valid():
-        if hasattr(request.user, "profile"):
-            return redirect("create_profile")
-        profile = profile_form.save(commit=False)
-        profile.user = request.user
-        profile.save()
-        return redirect("login")
-    return render(
-        request, "create_profile.html", context={"profile_form": profile_form}
-    )
+    if request.method == "POST":
+        profile_form = ProfileForm(request.POST, request.FILES or None)
+        if profile_form.is_valid():
+            if hasattr(request.user, "profile"):
+                return redirect("create_profile")
+            profile = profile_form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect("login")
+        return render(
+            request,
+            "create_profile.html",
+            context={"profile_form": profile_form},
+        )
+    else:
+        profile_form = ProfileForm()
+        return render(
+            request,
+            "create_profile.html",
+            context={"profile_form": profile_form},
+        )
 
 
 def login_view(request):
@@ -151,6 +161,23 @@ def create_project(request):
         return redirect("profile-detail", pk=request.user.profile.id)
     return render(
         request, "create_project.html", {"project_form": project_form}
+    )
+
+
+@login_required(login_url="login")
+def update_profile(request, profile_id):
+    profile = get_object_or_404(Profile, pk=profile_id, user=request.user)
+    if request.method == "POST":
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect("profile-detail", pk=request.user.profile.id)
+    else:
+        profile_form = ProfileForm(instance=profile)
+    return render(
+        request,
+        "update_profile.html",
+        {"profile_form": profile_form, "profile": profile},
     )
 
 
