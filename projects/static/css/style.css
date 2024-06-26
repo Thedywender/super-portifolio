@@ -24,13 +24,13 @@ ul {
     display: flex;
     align-items: center;
     background: radial-gradient(circle, #06558a, #109e50, #065511);
-    display: flex;
     color: #fff;
     justify-content: space-around;
-    padding: 7px 0;
+    padding: 7px 10px;
     text-align: center;
-    position: relative;
     height: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 -4px 8px rgba(255, 255, 255, 0.3);
+    position: relative;
 }
 
 .header-certificate {
@@ -40,14 +40,9 @@ ul {
     align-self: center;
 }
 
-#profile-name {
-    font-size: 25px;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(80deg, rgb(189, 209, 189), rgb(177, 167, 201));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: rgb(24, 199, 15);
-    text-shadow: 2px 2px 2px rgba(19, 18, 18);
+#linkedin-image img, #github-image img {
+    margin: 0 180px;
+    width: 40px;
 }
 
 .profile-photo {
@@ -70,13 +65,19 @@ ul {
     padding: 20px;
 }
 
-#profile-logout-link {
+#profile-logout, #profile-home {
     position: absolute;
     right: 18px;
     top: 40px;
     width: 40px;
     color: white;
     filter: drop-shadow(0 10px 10px white);
+}
+
+
+#profile-home {
+    left: 18px;
+    width: 37px;
 }
 
 #profile-certificate {
@@ -88,10 +89,6 @@ ul {
     border-radius: 8px;
     background-color: green;
     color: white;
-}
-
-#logout-img, .profile-infos-image {
-    width: 40px;
 }
 
 .main-container {
@@ -130,6 +127,7 @@ ul {
     position: relative;
     display: inline-block;
     min-height: 30px;
+    filter: drop-shadow(0 10px 10px white);
 }
 
 .section-title::after {
@@ -227,7 +225,7 @@ ul {
 
 #profile-bio {
     color: rgb(107, 10, 10);
-    font-family: 'Poppins', sans-serif;
+    font-family: "Chakra Petch", 'Bebas neue', sans-serif;
     width: 80%;
     font-weight: bold;
     text-shadow: 1px 1px 2px gray;
@@ -262,29 +260,30 @@ ul {
     width: 30%;
 }
 
-.login-text-header, .login-infos-header {
-    font-size: 35px;
-    font-family: 'Poppins', sans-serif;
+.login-text-header {
+    align-items: center;
+    font-size: 30px;
+    font-family: "Chakra Petch", 'Poppins', sans-serif;
     background: linear-gradient(45deg, rgb(13, 99, 11), rgb(38, 12, 99));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
     text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.5);
-    /* transform: rotate(-8deg); */
+    transform: rotate(-4deg);
     margin-top: 5px;
     margin-bottom: 20px;
 }
 
 .login-infos-header {
-    font-size: 40px;
-    /* transform: rotate(-2deg); */
-    background: linear-gradient(80deg, rgb(189, 209, 189), rgb(177, 167, 201));
+    flex-grow: 1;
+    font-size: 45px;
+    font-family: "Chakra Petch", 'Bebas neue', sans-serif;
+    background: linear-gradient(0deg, rgb(230, 243, 230), rgb(227, 224, 235));
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: rgb(26, 190, 17);
-    text-shadow: 2px 2px 2px rgba(19, 18, 18);
-    margin-bottom: 10px;
+    -webkit-text-fill-color: rgb(34, 34, 224);
+    text-shadow: 2px 2px 2px rgb(190, 174, 174);
 }
 
 .form-login-inputs {

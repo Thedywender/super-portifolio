@@ -8,6 +8,9 @@
 <div class="login-block-container">
     <header class="profile-infos-container">
         <h1 class="login-infos-header">Update Project!</h1>
+        <a href="{% url 'profile-detail' user.id %}">
+            <img class="profile-infos-image" id="profile-home" src="{% static 'img/home.png' %}" alt="Profile Home">
+        </a>
         <a class="profile-infos" id="profile-logout-link" href="{% url 'logout' %}">
             <img class="profile-infos-image" id="profile-logout" src="{% static 'img/out.png' %}" alt="Profile Image">
         </a>
